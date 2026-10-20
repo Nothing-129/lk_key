@@ -19,7 +19,7 @@ public class WidgetService extends Service {
             KeyWidget.update(WidgetService.this,message,true);
             if(available&&!sent){sent=true;key.command(opcode);}
         }
-        public void result(int command){if(sent&&command==opcode)finish(command==2?"开锁指令已确认":"关锁升窗指令已确认");}
+        public void result(int command){if(sent&&command==opcode)finish(command==2?"开锁指令已确认":"关锁指令已确认");}
         public void failed(String message){finish(message);}
     };
     @Override public IBinder onBind(Intent intent){return null;}
@@ -34,7 +34,7 @@ public class WidgetService extends Service {
         manager.createNotificationChannel(new NotificationChannel("widget_control","桌面钥匙操作",NotificationManager.IMPORTANCE_LOW));
         PendingIntent app=PendingIntent.getActivity(this,0,new Intent(this,MainActivity.class),PendingIntent.FLAG_IMMUTABLE);
         Notification notification=new Notification.Builder(this,"widget_control").setSmallIcon(R.drawable.ic_key_mono)
-            .setContentTitle("LYNK & CO").setContentText(opcode==2?"正在执行开锁":"正在执行关锁升窗")
+            .setContentTitle("LYNK & CO").setContentText(opcode==2?"正在执行开锁":"正在执行关锁")
             .setContentIntent(app).setOngoing(true).build();
         startForeground(1,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
         handler.postDelayed(()->finish("操作超时，请检查车辆状态"),25000);

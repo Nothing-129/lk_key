@@ -1,0 +1,211 @@
+{
+  "name": "LYNK & CO 03",
+  "color": "gray",
+  "mode": "articulated-model",
+  "source": "User-supplied lynk03.rar",
+  "windows": [
+    "Window_front_left",
+    "Window_front_right",
+    "Window_rear_left",
+    "Window_rear_right"
+  ],
+  "trunkParts": [
+    "1738",
+    "1765",
+    "1777",
+    "1789",
+    "1847",
+    "212",
+    "2181",
+    "2199",
+    "2217",
+    "2229",
+    "224",
+    "2241",
+    "2253",
+    "2265",
+    "2299",
+    "2311",
+    "2323",
+    "2335",
+    "2347",
+    "239",
+    "254",
+    "2572",
+    "4551",
+    "4563",
+    "4773",
+    "5154",
+    "5166",
+    "5178",
+    "5190",
+    "5393",
+    "5669",
+    "768",
+    "780"
+  ],
+  "mirrorParts": {
+    "left": [
+      "4857",
+      "4869",
+      "4881",
+      "4893",
+      "4905",
+      "4917"
+    ],
+    "right": [
+      "4955",
+      "4967",
+      "4979",
+      "4991",
+      "5003",
+      "5015"
+    ]
+  },
+  "sourceMeshCount": 455,
+  "textures": "Rebuilt PBR materials; original archive contains no texture images",
+  "finish": "APP car_render.png reference: neutral steel gray, dark glazing, neutral studio reflections",
+  "taillights": {
+    "cover": [
+      "1905",
+      "1923",
+      "2181",
+      "2199"
+    ],
+    "optics": [
+      "2001",
+      "2115",
+      "2229",
+      "2311"
+    ],
+    "redPerimeter": [
+      "2013",
+      "2127"
+    ],
+    "lowerReflector": [
+      "1986",
+      "2103"
+    ],
+    "blades": [
+      "1941",
+      "2067",
+      "2241",
+      "2323"
+    ],
+    "lowerLoop": [
+      "1956",
+      "2079"
+    ],
+    "housing": [
+      "1971",
+      "2091",
+      "2253",
+      "2335"
+    ],
+    "reflector": [
+      "2025",
+      "2139",
+      "2217",
+      "2265",
+      "2299",
+      "2347"
+    ]
+  },
+  "rearBadges": {
+    "silver": [
+      "2572",
+      "4773",
+      "5669"
+    ],
+    "removedVariants": [
+      "2590",
+      "2602",
+      "2624",
+      "2636",
+      "5277",
+      "5436"
+    ]
+  },
+  "front": {
+    "stockBumperParts": [
+      "4588",
+      "4600",
+      "4612"
+    ],
+    "removedParts": [
+      "5234",
+      "5591",
+      "5606",
+      "5621",
+      "5639",
+      "573",
+      "5864",
+      "5873",
+      "5882",
+      "5891",
+      "5900"
+    ],
+    "lamps": {
+      "cover": [
+        "2874",
+        "2892",
+        "654",
+        "714"
+      ],
+      "optics": [
+        "2946",
+        "3015"
+      ],
+      "housing": [
+        "2910",
+        "2928",
+        "604",
+        "634"
+      ],
+      "reflector": [
+        "2958",
+        "2985",
+        "3027",
+        "3051",
+        "591",
+        "624"
+      ],
+      "drl": [
+        "2970",
+        "3039"
+      ],
+      "grille": [
+        "4588",
+        "4612",
+        "555"
+      ]
+    },
+    "projectorModulesPerSide": 4
+  },
+  "side": {
+    "removedVentParts": [
+      "5408",
+      "5417"
+    ],
+    "fenders": [
+      "3214",
+      "3232"
+    ]
+  },
+  "exhaust": {
+    "outlets": 2,
+    "radius": 0.05,
+    "height": 0.327,
+    "centersX": [
+      -0.6,
+      0.6
+    ],
+    "replacedSourceParts": [
+      "1416",
+      "1433",
+      "5350",
+      "5359"
+    ],
+    "trimmedUnderbodyPart": "1450"
+  }
+}

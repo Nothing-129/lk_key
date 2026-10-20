@@ -9,3 +9,4 @@ build/
 .env
 .env.*
 local.properties
+app/assets/vehicle3d/

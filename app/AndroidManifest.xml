@@ -1,12 +1,24 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.zcy.lkkey" android:versionCode="22" android:versionName="1.7.2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.zcy.lkkey" android:versionCode="30" android:versionName="1.9.3">
  <uses-sdk android:minSdkVersion="31" android:targetSdkVersion="35"/>
  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+ <uses-permission android:name="android.permission.NFC"/>
+ <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+ <uses-feature android:name="android.hardware.nfc" android:required="false"/>
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/>
  <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
  <application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:label="LYNK &amp; CO" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:debuggable="true">
-  <activity android:name=".MainActivity" android:exported="true"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+  <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop"><intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter></activity>
+  <activity android:name=".NfcSetupActivity" android:exported="false" android:theme="@style/NfcSetupTheme"/>
+  <activity android:name=".NfcTagActivity" android:exported="true" android:excludeFromRecents="true" android:noHistory="true" android:taskAffinity="com.zcy.lkkey.nfc" android:launchMode="singleTop" android:theme="@style/NfcDispatchTheme">
+   <intent-filter>
+    <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+    <category android:name="android.intent.category.DEFAULT"/>
+    <data android:scheme="lkkey" android:host="nfc" android:path="/unlock"/>
+   </intent-filter>
+  </activity>
   <service android:name=".WidgetService" android:exported="false" android:foregroundServiceType="connectedDevice"/>
+  <service android:name=".NfcService" android:exported="false" android:foregroundServiceType="connectedDevice"/>
   <receiver android:name=".KeyWidget" android:exported="false" android:label="LYNK &amp; CO">
    <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter>
    <meta-data android:name="android.appwidget.provider" android:resource="@xml/key_widget_info"/>

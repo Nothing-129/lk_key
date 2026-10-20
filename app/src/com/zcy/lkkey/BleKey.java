@@ -24,7 +24,13 @@ final class BleKey {
     private BluetoothGattCharacteristic writer;
     private boolean ready,busy,awaitingMtu;
     private int pending=-1;
+    private Runnable commandCompletion;
+    private boolean completionConfirmed;
+    private String completionMessage="";
+    boolean completionConfirmed(){return completionConfirmed;}
+    String completionMessage(){return completionMessage;}
     private String actionLabel="";
+    String acknowledgedAction(){return actionLabel;}
     private WashMode wash;
     WashMode wash(){return wash;}
     private String advertisement="", message="未连接";
@@ -34,11 +40,14 @@ final class BleKey {
     boolean available(){return ready&&!busy;}
     void attach(Listener listener){listeners.add(listener);listener.changed(message,available());}
     void detach(Listener listener){listeners.remove(listener);if(listeners.isEmpty())disconnect();}
+    private String actionDisplayLabel(){return "关锁升窗".equals(actionLabel)?"关锁":actionLabel;}
     private void show(String value){message=value;Log.i("LkKey",value);for(Listener l:new ArrayList<>(listeners))l.changed(value,available());}
-    private void fail(String value){disconnect();show(value);for(Listener l:new ArrayList<>(listeners))l.failed(value);}
-    private void disconnect(){
+    private void fail(String value){disconnect(value);show(value);for(Listener l:new ArrayList<>(listeners))l.failed(value);}
+    private void disconnect(){disconnect("操作已中断，请重新碰贴片");}
+    private void disconnect(String reason){
         handler.removeCallbacksAndMessages(null);ready=false;busy=false;awaitingMtu=false;pending=-1;writer=null;advertisement="";wash=null;
         if(gatt!=null){BluetoothGatt old=gatt;gatt=null;try{old.disconnect();old.close();}catch(SecurityException denied){Log.w("LkKey","Connect permission revoked");}}
+        completeCommand(false,reason);
     }
     void connect(){
         if(gatt!=null)return;
@@ -58,6 +67,17 @@ final class BleKey {
         if(opcode!=1&&opcode!=2)return false;
         return perform(opcode,opcode==1?new byte[]{1,(byte)0x88,0x13}:new byte[0],opcode==1?"关锁升窗":"开锁");
     }
+    boolean command(int opcode,Runnable completion){
+        if((opcode!=1&&opcode!=2)||!available())return false;
+        commandCompletion=completion;
+        boolean sent=command(opcode);
+        if(!sent)completeCommand(false,"指令未能发送，请重新碰贴片");
+        return sent;
+    }
+    private void completeCommand(boolean confirmed,String message){
+        Runnable completion=commandCompletion;commandCompletion=null;
+        if(completion!=null){completionConfirmed=confirmed;completionMessage=message;completion.run();}
+    }
     boolean windows(boolean open){return perform(open?2:1,new byte[]{1,(byte)0x88,0x13},open?"开窗":"关窗");}
     boolean trunk(){return perform(3,new byte[0],"后备箱");}
     boolean readWash(){return perform(10,new byte[0],"读取洗车模式");}
@@ -68,7 +88,7 @@ final class BleKey {
     private void send(int opcode,byte[] data){
         byte[] frame=Protocol.frame(opcode,data,advertisement,Calendar.getInstance());
         busy=true;pending=opcode;
-        show(opcode==6?"正在同步设备时间…":"正在"+actionLabel+"…");
+        show(opcode==6?"正在同步设备时间…":"正在"+actionDisplayLabel()+"…");
         writer.setWriteType((writer.getProperties()&BluetoothGattCharacteristic.PROPERTY_WRITE)!=0?BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT:BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
         writer.setValue(frame);Log.i("LkKey","TX opcode="+opcode+" bytes="+frame.length);
         if(!gatt.writeCharacteristic(writer)){fail("指令未能发送，请重试");return;}
@@ -123,7 +143,10 @@ final class BleKey {
                 try{wash=WashMode.decode(Arrays.copyOfRange(value,4,4+length));}
                 catch(IllegalArgumentException invalid){fail("设备返回的洗车状态无效，请重新读取");return;}
             }
-            show(opcode==10?"洗车模式状态已更新":"设备已确认"+actionLabel+"指令");
+            boolean recorded=LocalLockStore.acknowledge(context,result,opcode,actionLabel);
+            String confirmation=(opcode==10?"洗车模式状态已更新":"设备已确认"+actionDisplayLabel()+"指令")+(recorded?"":"，本地记录保存失败");
+            completeCommand(true,confirmation);
+            show(confirmation);
             for(Listener l:new ArrayList<>(listeners))l.result(opcode);
         }
     }

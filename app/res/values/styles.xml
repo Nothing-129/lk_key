@@ -1,0 +1,25 @@
+<resources>
+ <style name="NfcDispatchTheme" parent="android:style/Theme.Translucent.NoTitleBar">
+  <item name="android:windowBackground">@android:color/transparent</item>
+  <item name="android:windowDisablePreview">true</item>
+  <item name="android:windowAnimationStyle">@null</item>
+  <item name="android:backgroundDimEnabled">false</item>
+ </style>
+ <style name="NfcSetupTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+  <item name="android:windowLightStatusBar">false</item>
+  <item name="android:windowLightNavigationBar">false</item>
+  <item name="android:windowBackground">#10151B</item>
+ </style>
+ <style name="DuskDialogTheme" parent="android:style/Theme.Material.Dialog.Alert">
+  <item name="android:colorAccent">#BDD0E4</item>
+  <item name="android:colorControlHighlight">#307E98B4</item>
+  <item name="android:colorBackground">#1D232B</item>
+  <item name="android:windowBackground">#1D232B</item>
+  <item name="android:textColorPrimary">#F2F5FA</item>
+  <item name="android:textColorSecondary">#AAB6C4</item>
+  <item name="android:backgroundDimEnabled">true</item>
+  <item name="android:backgroundDimAmount">0.55</item>
+  <item name="android:windowLightStatusBar">false</item>
+  <item name="android:windowLightNavigationBar">false</item>
+ </style>
+</resources>

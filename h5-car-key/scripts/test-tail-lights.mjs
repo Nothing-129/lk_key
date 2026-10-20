@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { sampleTailSequence as sample } from '../src/tail-light-sequence.js';
+const levels = (time, action = 'unlock') => sample(action, time).levels;
+assert(levels(200)[0] === 1 && levels(200)[6] === 0, 'welcome sweeps from center outward');
+assert(levels(650).slice(0, 7).every(v => v === 0) && levels(650)[7] === 1, 'only upper blades pause between sweeps');
+assert(levels(940)[0] === 1 && levels(940)[6] === 0, 'second welcome sweep');
+assert(levels(1600).every(v => v === 1), 'welcome holds all lamps');
+assert(levels(3200).every(v => v === 0), 'welcome finishes dark');
+assert(levels(100, 'lock').every(v => v === 1), 'farewell begins fully lit');
+assert(levels(1850, 'lock')[0] === 1 && levels(1850, 'lock')[6] === 0, 'farewell extinguishes outer segments first');
+assert(levels(2200, 'lock').slice(0, 7).every(v => v === 0) && levels(2200, 'lock')[7] === 1, 'lower loop extinguishes last');
+assert(levels(2450, 'lock').every(v => v === 0), 'farewell finishes dark');
+assert(sample('unlock', 900, true).levels.every(v => v === 0), 'reduced motion uses one brief steady acknowledgement');
+assert(sample('invalid', 0).levels.every(v => v === 0), 'unrelated actions do not light lamps');
+console.log('PASS: outward welcome sweeps, inward farewell, independent lower loops, dark endpoints, reduced motion');

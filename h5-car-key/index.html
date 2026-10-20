@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1118" />
+  <meta name="description" content="LYNK & CO 03 · 灰色 3D 车身与开合动画 · 数字车钥匙演示" />
+  <title>LYNK & CO 03 · 3D 数字车钥匙</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230d1118'/%3E%3Ctext x='10' y='44' fill='%23f1e6d3' font-size='35' font-family='sans-serif'%3E03%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="ambient"></div>
+  <main class="app">
+    <header class="header">
+      <a class="wordmark" href="./" aria-label="LYNK & CO 首页">LYNK<span>&</span>CO</a>
+      <div class="connection"><span class="signal"><i></i><i></i><i></i></span><span>演示已连接</span></div>
+    </header>
+    <section class="vehicle" aria-label="灰色领克 03 外观展示">
+      <div class="vehicle-heading"><div><div class="eyebrow">LYNK & CO 03 · 2022</div><h1>我的领克 <span>03</span></h1></div><span class="edition">DIGITAL KEY <span>01</span></span></div>
+      <div class="scene-wrap">
+        <div class="horizon"></div><div class="mountains mountains-back"></div><div class="mountains"></div>
+        <span class="scene-word">03</span>
+        <div id="scene" tabindex="0" role="slider" aria-label="灰色领克 03 外观角度；拖动或使用方向键环视，双指或加减键缩放" aria-valuemin="0" aria-valuemax="359" aria-valuenow="0" aria-valuetext="默认前侧视角"></div>
+        <div id="loading" class="loading"><span></span><span id="loading-label">正在唤醒你的座驾</span></div>
+        <div class="vehicle-status" id="vehicle-status"><span class="status-dot"></span><span id="lock-status">车辆已锁定</span></div>
+        <button class="view-reset icon-button" id="reset-view" aria-label="重置车辆视角" title="重置视角"><span data-icon="rotate"></span></button>
+        <div class="scene-bottom"><span class="drag-hint"><span data-icon="orbit"></span>拖动环视 · 双指缩放</span><div class="exterior-color"><i></i>灰色 <span id="angle-readout">000°</span></div></div>
+        <div class="view-presets" role="group" aria-label="外观视角"><button class="view-preset" data-frame="0" aria-pressed="true">前侧</button><button class="view-preset" data-frame="31" aria-pressed="false">侧面</button><button class="view-preset" data-frame="18" aria-pressed="false">车尾</button></div>
+      </div>
+      <div class="vehicle-meta"><div><span class="meta-label">车辆状态</span><strong id="summary-status">安心停驻</strong></div><span class="meta-divider"></span><div><span class="meta-label">车窗</span><strong id="window-status">已关闭</strong></div><span class="meta-divider"></span><div><span class="meta-label">后备箱</span><strong id="trunk-status">已关闭</strong></div><span class="meta-icon" data-icon="shield"></span></div>
+    </section>
+    <section class="controls" aria-label="车钥匙控制">
+      <div class="control-heading"><div class="eyebrow">ALWAYS WITH YOU</div><h2>随心掌控</h2><p>下一程，从轻触开始。</p></div>
+      <div class="lock-control"><button id="lock" class="lock-button" aria-label="关锁" aria-pressed="true"><span data-icon="lock"></span><span>关锁</span></button><button id="unlock" class="lock-button primary" aria-label="开锁" aria-pressed="false"><span data-icon="unlock"></span><span>开锁</span><span class="button-arrow">↗</span></button></div>
+      <div class="more-controls"><div class="section-label"><h2>更多控制</h2><span>让每一程，更从容</span></div><div class="control-grid"><button class="action-card" id="open-windows"><span class="card-icon" data-icon="window-down"></span><span class="card-label">开窗<span>清新，即刻入内</span></span><span class="card-indicator"></span></button><button class="action-card" id="close-windows"><span class="card-icon" data-icon="window-up"></span><span class="card-label">关窗<span>留一方静谧</span></span><span class="card-indicator"></span></button><button class="action-card" id="trunk" aria-pressed="false"><span class="card-icon" data-icon="trunk"></span><span class="card-label">后备箱<span id="trunk-description">装下生活的可能</span></span><span class="card-indicator"></span></button><button class="action-card" id="find-car"><span class="card-icon" data-icon="find"></span><span class="card-label">寻车<span>光圈，标记你的座驾</span></span><span class="card-indicator"></span></button></div></div>
+      <div class="key-card"><div class="key-emblem" data-icon="key"></div><div><strong>你的专属数字钥匙</strong><span>靠近一点，自由多一点</span></div><span class="key-badge">DEMO</span></div>
+    </section>
+    <footer><span><i></i> 3D 开合动画 · 数字钥匙演示</span><span>LYNK & CO</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"><span data-icon="check"></span><span id="toast-text"></span></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
